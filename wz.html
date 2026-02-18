@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Waziha! 🎂</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Dancing+Script:wght@700&display=swap');
+
+    body {
+      background: #f3e5f5; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Fredoka One', cursive;
+      overflow: hidden;
+    }
+
+    
+    .bg-item { position: absolute; z-index: 1; opacity: 0.9; pointer-events: none; }
+    .boy { bottom: 20px; right: 40px; font-size: 70px; }
+    .teddy { top: 40px; left: 50px; font-size: 60px; }
+    .doll { bottom: 50px; left: 40px; font-size: 60px; }
+    .candy { top: 70px; right: 70px; font-size: 40px; }
+
+   
+    #gift-wrapper { text-align: center; cursor: pointer; z-index: 100; }
+    .box {
+      width: 150px; height: 150px; background: #ffeb3b; 
+      border-radius: 15px; border: 5px solid #fbc02d;
+      animation: bounce 1s infinite; margin: 0 auto;
+    }
+    .box::after { content: ''; position: absolute; width: 30px; height: 100%; background: #ff3d00; left: 50%; transform: translateX(-50%); }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+   
+    .cake-container {
+      width: 450px; height: 450px;
+      background: #7b1fa2; /* Deep Purple Color */
+      border-radius: 50%;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      position: relative;
+      box-shadow: inset 0 0 60px rgba(0,0,0,0.4), 0 20px 50px rgba(0,0,0,0.3);
+      border: 15px solid #4a148c;
+      z-index: 10;
+    }
+
+   
+    .cake-container::before {
+      content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+      border-radius: 50%; border: 8px dotted #e1bee7; pointer-events: none;
+    }
+
+    
+    .roses {
+      position: absolute; top: 25px; left: 60px;
+      display: flex; gap: 5px; transform: rotate(-15deg);
+    }
+    .rose { font-size: 40px; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }
+
+  
+    .cake-text { text-align: center; color: #fff; z-index: 20; pointer-events: none; }
+    h1 { font-family: 'Dancing Script', cursive; font-size: 42px; margin: 0; color: #f48fb1; }
+    .name { font-size: 30px; color: #ffffff; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .q-text { font-size: 18px; color: #e1bee7; margin-top: 10px; }
+
+  
+    .btn-row {
+      display: flex; gap: 25px; margin-top: 35px;
+      justify-content: center; z-index: 30; width: 100%;
+    }
+    
+    .btn {
+      width: 110px; height: 50px; border: none; font-weight: bold;
+      font-size: 20px; cursor: pointer; border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s;
+    }
+
+    #dadBtn { background: #0288d1; color: white; border-bottom: 5px solid #01579b; }
+    #momBtn { background: #d81b60; color: white; border-bottom: 5px solid #880e4f; position: relative; }
+
+   
+    #result { display: none; position: fixed; width: 100%; text-align: center; top: 45%; z-index: 1000; }
+    .love-msg {
+      font-size: 35px; color: #ad1457; font-weight: bold;
+      background: white; padding: 25px 50px; border-radius: 60px;
+      border: 5px dashed #f48fb1; display: inline-block;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      animation: floatMsg 3.5s ease-in-out infinite;
+    }
+    @keyframes floatMsg {
+      0%, 100% { transform: translate(0,0) rotate(0); }
+      25% { transform: translate(40px, -60px) rotate(6deg); }
+      75% { transform: translate(-40px, 60px) rotate(-6deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-item boy">👦</div>
+  <div class="bg-item teddy">🧸</div>
+  <div class="bg-item doll">🪆</div>
+  <div class="bg-item candy">🍭</div>
+
+  <div id="gift-wrapper" onclick="openCake()">
+    <div class="box"></div>
+    <h2 style="color: #6a1b9a; margin-top: 25px;">Waziha! 🎂<br>Click to Open Your Cake!</h2>
+  </div>
+
+  <div class="cake-container" id="cakeCard">
+    <div class="roses">
+      <div class="rose">🌹</div>
+      <div class="rose">🌹</div>
+      <div class="rose">🌹</div>
+    </div>
+    
+    <div class="cake-text">
+      <h1>Happy Birthday</h1>
+      <div class="name">Waziha!</div>
+      <div class="q-text">Who do you love more?</div>
+    </div>
+    
+    <div class="btn-row">
+      <button id="dadBtn" class="btn" onclick="finish()">Dad</button>
+      <button id="momBtn" class="btn">Mom</button>
+    </div>
+  </div>
+
+  <div id="result">
+    <div class="love-msg">Mom loves you very much! ❤️</div>
+  </div>
+
+  <script>
+    const cakeCard = document.getElementById('cakeCard');
+    const momBtn = document.getElementById('momBtn');
+
+    function openCake() {
+      document.getElementById('gift-wrapper').style.display = 'none';
+      cakeCard.style.display = 'flex';
+    }
+
+ ে
+    function moveMom() {
+      const x = Math.random() * 180 - 90;
+      const y = Math.random() * 80 - 40;
+      momBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    momBtn.addEventListener('mouseover', moveMom);
+    momBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveMom();
+    });
+
+    function finish() {
+      cakeCard.style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      document.body.style.background = "#f3e5f5";
+    }
+  </script>
+</body>
+</html>
