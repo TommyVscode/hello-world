@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine Surprise for Gunu ❤️</title>
+  <style>
+    body {
+      background: #fdf0f0; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    
+    #gift-wrapper {
+      text-align: center;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .gift-box {
+      width: 200px;
+      height: 180px;
+      background: linear-gradient(145deg, #ff1744, #d50000);
+      position: relative;
+      border-radius: 15px;
+      margin: 0 auto;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      animation: heartBeat 1.2s infinite;
+    }
+
+    .gift-box::before {
+      content: '';
+      position: absolute;
+      width: 35px;
+      height: 100%;
+      background: #ffd700;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    
+    .card-container {
+      position: relative;
+      width: 450px;
+      height: 400px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      animation: unfold 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .card {
+      background: #FFD1DC; 
+      width: 100%;
+      height: 100%;
+      position: relative;
+      clip-path: path('M225,380 C225,380 30,240 30,120 C30,60 80,20 135,20 C170,20 205,45 225,80 C245,45 280,20 315,20 C370,20 420,60 420,120 C420,240 225,380 225,380 Z');
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 5;
+    }
+
+    
+    .pearl {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #f0d5d5);
+      border-radius: 50%;
+      box-shadow: 1px 1px 4px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    @keyframes unfold {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    h1 { color: #b76e79; font-size: 22px; margin-top: -40px; padding: 0 60px; z-index: 15; position: relative; }
+
+    
+    .btn-container {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .heart-btn {
+      width: 90px;
+      height: 90px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      font-size: 14px;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      clip-path: path('M45,85 C45,85 5,50 5,28 C5,12 17,5 28,5 C36,5 42,12 45,18 C48,12 54,5 62,5 C73,5 85,12 85,28 C85,50 45,85 45,85 Z');
+      padding-bottom: 20px;
+      transition: transform 0.2s;
+    }
+
+    #noBtn {
+      background: #5d4037; 
+      color: #ffffff;
+      clip-path: polygon(50% 35%, 55% 15%, 75% 5%, 95% 25%, 95% 45%, 50% 95%, 5% 45%, 5% 25%, 25% 5%, 45% 15%, 42% 35%, 50% 45%, 58% 35%);
+      position: absolute; 
+      transition: all 0.3s ease-out;
+    }
+
+    
+    #result {
+      display: none;
+      text-align: center;
+      z-index: 100;
+    }
+
+    .love-text {
+      font-size: 45px;
+      color: #ff4d6d;
+      font-weight: 900;
+      animation: floatingText 3s ease-in-out infinite;
+    }
+
+    @keyframes floatingText {
+      0%, 100% { transform: translate(0,0) rotate(0deg); }
+      50% { transform: translate(20px, -30px) rotate(5deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="crySound" loop>
+    <source src="https://www.soundjay.com/human/sounds/baby-crying-01.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="gift-wrapper" onclick="openGift()">
+    <div class="gift-box"></div>
+    <h2 style="color: #e91e63; margin-top: 30px;">Tap to Open Gunu's Surprise! 🎁</h2>
+  </div>
+
+  <div class="card-container" id="cardContainer">
+    <div class="card" id="mainCard">
+      <h1>Gungun ❤️<br>Will you be my Valentine?</h1>
+      <div class="btn-container">
+        <button id="yesBtn" class="heart-btn">Yes 😍</button>
+        <button id="noBtn" class="heart-btn">No 🙃</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="result">
+    <div class="love-text">I love you Gunuuuuuuuuuu ❤️</div>
+  </div>
+
+  <script>
+    const crySound = document.getElementById('crySound');
+    const container = document.getElementById('cardContainer');
+    const noBtn = document.getElementById('noBtn');
+
+    
+    function createPearls() {
+      const totalPearls = 70;
+     
+      const pathData = "M225,380 C225,380 30,240 30,120 C30,60 80,20 135,20 C170,20 205,45 225,80 C245,45 280,20 315,20 C370,20 420,60 420,120 C420,240 225,380 225,380 Z";
+      
+      const svgNS = "http://www.w3.org/2000/svg";
+      const path = document.createElementNS(svgNS, "path");
+      path.setAttribute("d", pathData);
+      const pathLength = path.getTotalLength();
+
+      for (let i = 0; i < totalPearls; i++) {
+        const point = path.getPointAtLength((i / totalPearls) * pathLength);
+        const pearl = document.createElement('div');
+        pearl.className = 'pearl'; 
+        pearl.style.left = (point.x - 6.5) + 'px';
+        pearl.style.top = (point.y - 6.5) + 'px';
+        container.appendChild(pearl);
+      }
+    }
+
+    function openGift() {
+      document.getElementById('gift-wrapper').style.display = 'none';
+      container.style.display = 'flex';
+      createPearls(); 
+      
+      noBtn.style.left = "250px";
+      noBtn.style.top = "220px";
+    }
+
+    function runAway() {
+      
+      const minX = 75;  const maxX = 285;
+      const minY = 105; const maxY = 265;
+      
+      const randomX = Math.random() * (maxX - minX) + minX;
+      const randomY = Math.random() * (maxY - minY) + minY;
+      
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+
+      if (crySound.paused) crySound.play();
+    }
+
+    noBtn.addEventListener("mouseover", runAway);
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); runAway(); });
+
+    document.getElementById('yesBtn').addEventListener('click', () => {
+      crySound.pause();
+      container.style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      document.body.style.background = "#FFD1DC"; 
+    });
+  </script>
+</body>
+</html>
